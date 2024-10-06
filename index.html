@@ -53,8 +53,12 @@
         }
 
         .content h1 {
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 20px;
+        }
+
+        .content a {
+            text-decoration: none;
         }
 
         .content button {
@@ -65,6 +69,7 @@
             font-size: 1em;
             cursor: pointer;
             width: 100%;
+            border-radius: 5px;
         }
 
         .content button:hover {
@@ -75,17 +80,13 @@
 </head>
 <body>
     <div class="background">
-        <img class="logo" src="" alt="Scented Mirage Logo">
+        <img class="logo" src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/refs/heads/main/Assets/logo.png" alt="Scented Mirage Logo">
         <div class="content">
             <h1>Where scent becomes an escape.<br>Discover perfumes that evoke emotions, memories, and dreams.</h1>
-            <button onclick="enterSite()">Enter Site</button>
+            <a href="discover.html">
+                <button>Enter Site</button>
+            </a>
         </div>
     </div>
-    <script>
-        function enterSite() {
-            alert("Welcome to Scented Mirage!");
-            // Here you can redirect the user to another page or perform other actions
-        }
-    </script>
 </body>
 </html>
