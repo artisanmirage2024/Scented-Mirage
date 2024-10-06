@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Scented Mirage - Discover Our Collection</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #292c38, #bc9c22);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .header-nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .header-nav .logo {
+            font-size: 1.8em;
+            color: #bc9c22;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header-nav nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .header-nav nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .header-nav nav a:hover {
+            color: #bc9c22;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown .dropbtn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #292c38;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #444;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(188, 156, 34, 0.5); /* Semi-transparent background on hover */
+            color: #292c38;
+        }
+
+        .messenger-button {
+            background-color: #0084ff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .messenger-button:hover {
+            background-color: #005bb5;
+        }
+
+        .header {
+            text-align: center;
+            padding: 120px 20px 50px 20px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+        }
+
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .about-section div {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .about-content p, .meaning-content p {
+            font-size: 1.2em;
+            line-height: 1.6em;
+            text-align: justify; /* Justify the text */
+        }
+
+        .about-content h2, .meaning-content h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .category-section {
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        .category-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .category-buttons button {
+            background-color: #bc9c22;
+            color: #292c38;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+
+        .category-buttons button:hover {
+            background-color: #ffffff;
+            color: #292c38;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+
+        .footer a {
+            color: #bc9c22;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <div class="header-nav">
+        <a href="#" class="logo">Scented Mirage</a>
+        <nav>
+            <a href="#">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Fragrance</button>
+                <div class="dropdown-content">
+                    <a href="#for-him">For Him</a>
+                    <a href="#for-her">For Her</a>
+                </div>
+            </div>
+            <a href="#contact">Contact Us</a>
+            <a href="https://m.me/370970646104189" class="messenger-button">Let's chat in Messenger</a>
+        </nav>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="header">
+        <h1>Welcome to Scented Mirage</h1>
+        <p>Discover perfumes that transport you beyond the ordinary and evoke emotions, memories, and dreams.</p>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="about-section">
+        <!-- About Us Content -->
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>
+                At Scented Mirage, we believe that scents have the power to transform your world. Our carefully crafted fragrances are designed to evoke emotions, awaken memories, and inspire dreams. Whether you are looking for something refreshing, bold, romantic, or timeless, our collection offers a scent for every occasion and every personality.
+            </p>
+            <p>
+                We take pride in sourcing high-quality ingredients to ensure that each perfume resonates with the unique identity of the wearer. Our mission is to help you express yourself through the art of fragrance, making every moment unforgettable.
+            </p>
+        </div>
+        <!-- Meaning Content -->
+        <div class="meaning-content">
+            <h2>Meaning of "Scented Mirage"</h2>
+            <p>
+                <strong>Scented:</strong> Carrying a pleasant smell, something that evokes memories, emotions, and feelings through its fragrance.
+            </p>
+            <p>
+                <strong>Mirage:</strong> An optical illusion, something that appears real but may be elusive or fleeting, often symbolizing dreams or visions.
+            </p>
+            <p>
+                <strong>Description:</strong> The combination of "Scented" and "Mirage" embodies the idea of an enchanting fragrance that sparks the imagination—creating experiences and memories that feel almost dreamlike, yet deeply resonate with one's senses.
+            </p>
+        </div>
+    </div>
+
+    <!-- Category Section with Buttons -->
+    <div class="category-section">
+        <h2>Choose your fragrance</h2>
+        <div class="category-buttons">
+            <button onclick="location.href='#for-him'">For Him</button>
+            <button onclick="location.href='#for-her'">For Her</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div id="contact" class="footer">
+        <p>Contact Us</p>
+        <p>Email: <a href="mailto:artisanmirage2024@gmail.com">artisanmirage2024@gmail.com</a> | Phone: 0950 206 5406 | <a href="https://www.facebook.com/scentedmirage">Facebook Page</a> | <a href="https://m.me/370970646104189">Messenger</a></p>
+    </div>
+</body>
+</html>
