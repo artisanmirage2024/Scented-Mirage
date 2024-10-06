@@ -10,7 +10,6 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #292c38, #bc9c22);
             color: #ffffff;
             overflow: hidden;
         }
@@ -26,31 +25,28 @@
 
         .background {
             height: 100%;
+            width: 100%;
+            position: relative;
             background: linear-gradient(135deg, #292c38, #bc9c22);
             background-size: 300% 300%;
             animation: moveBackground 10s linear infinite;
-            position: relative;
-        }
-
-        .logo {
-            position: absolute;
-            top: 10px; /* Moved up to prevent overlap with content */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 400px; /* Logo size */
-            height: auto; /* Maintain aspect ratio */
+            background-image: url('https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png');
+            background-repeat: repeat;
+            background-position: center;
+            background-size: 200px; /* Control the size of the watermark */
+            opacity: 0.08; /* Control transparency for watermark effect */
         }
 
         .content-container {
             position: absolute;
-            top: 55%; /* Adjusted to keep more space from the logo */
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             background-color: rgba(0, 0, 0, 0.6);
             padding: 40px;
             border-radius: 10px;
-            width: 600px; /* Increased width for more space */
+            width: 600px;
         }
 
         .content-container h1 {
@@ -70,7 +66,7 @@
             padding: 15px 30px;
             font-size: 1em;
             cursor: pointer;
-            width: auto; /* Set the button width to be natural */
+            width: auto;
         }
 
         .content-container button:hover {
@@ -81,7 +77,6 @@
 </head>
 <body>
     <div class="background">
-        <img class="logo" src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png" alt="Scented Mirage Logo">
         <div class="content-container">
             <h1>Where scent becomes an escape.</h1>
             <p>Discover perfumes that evoke emotions, memories, and dreams.</p>
