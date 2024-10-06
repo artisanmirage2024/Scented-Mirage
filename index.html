@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Scented Mirage - Welcome</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #292c38, #bc9c22);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 200% 200%;
+            }
+        }
+
+        .background {
+            height: 100%;
+            background: linear-gradient(135deg, #292c38, #bc9c22);
+            background-size: 300% 300%;
+            animation: moveBackground 10s linear infinite;
+            position: relative;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 250px;
+        }
+
+        .content h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .content button {
+            background-color: #bc9c22;
+            color: #292c38;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .content button:hover {
+            background-color: #ffffff;
+            color: #292c38;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <img class="logo" src="" alt="Scented Mirage Logo">
+        <div class="content">
+            <h1>Where scent becomes an escape.<br>Discover perfumes that evoke emotions, memories, and dreams.</h1>
+            <button onclick="enterSite()">Enter Site</button>
+        </div>
+    </div>
+    <script>
+        function enterSite() {
+            alert("Welcome to Scented Mirage!");
+            // Here you can redirect the user to another page or perform other actions
+        }
+    </script>
+</body>
+</html>
