@@ -32,24 +32,25 @@
             position: relative;
         }
 
-        .content {
+        .content-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 10px;
-            width: 600px; /* Increased width to make the container wider */
         }
 
         .logo {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 250px;
+            display: block;
+            margin: 0 auto 20px auto; /* Center the logo and add space below */
+            max-width: 150px; /* Adjust size as needed */
+        }
+
+        .content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            width: 600px; /* Increased width for more space */
         }
 
         .content h1 {
@@ -69,7 +70,7 @@
             padding: 15px 30px;
             font-size: 1em;
             cursor: pointer;
-            width: auto; /* Set the button width to be more natural */
+            width: auto; /* Set the button width to be natural */
         }
 
         .content button:hover {
@@ -80,11 +81,13 @@
 </head>
 <body>
     <div class="background">
-        <img class="logo" src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png" alt="Scented Mirage Logo">
-        <div class="content">
-            <h1>Where scent becomes an escape.</h1>
-            <p>Discover perfumes that evoke emotions, memories, and dreams.</p>
-            <button onclick="enterSite()">Enter Site</button>
+        <div class="content-container">
+            <img class="logo" src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png" alt="Scented Mirage Logo">
+            <div class="content">
+                <h1>Where scent becomes an escape.</h1>
+                <p>Discover perfumes that evoke emotions, memories, and dreams.</p>
+                <button onclick="enterSite()">Enter Site</button>
+            </div>
         </div>
     </div>
     <script>
