@@ -140,6 +140,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            align-items: center;
         }
 
         .contact-form input, .contact-form textarea, .contact-form select {
@@ -149,6 +150,8 @@
             font-size: 1.1em;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: border-color 0.3s;
+            width: 100%;
+            max-width: 400px;
         }
 
         .contact-form button {
@@ -158,12 +161,18 @@
             padding: 15px;
             cursor: pointer;
             border-radius: 5px;
-            font-size: 1em;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.3s;
+            max-width: 200px;
+            text-align: center;
+            align-self: center;
         }
 
         .contact-form button:hover {
             background-color: #ffffff;
             color: #292c38;
+            transform: scale(1.1);
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         .faq-section {
@@ -246,23 +255,29 @@
                 <input type="text" name="name" placeholder="Your Name *" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;">
                 <input type="email" name="email" placeholder="Your Email *" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;">
                 <textarea name="message" placeholder="Your Message *" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; height: 150px;"></textarea>
-                <button type="button" onclick="sendEmail()" style="background-color: #bc9c22; color: #ffffff; border: none; padding: 15px 30px; cursor: pointer; border-radius: 5px; font-size: 1.1em; transition: background-color 0.3s;">Send Email</button>
+                <button type="button" onclick="validateAndSendEmail()" style="background-color: #bc9c22; color: #ffffff; border: none; padding: 15px 30px; cursor: pointer; border-radius: 5px; font-size: 1.1em; transition: background-color 0.3s, transform 0.3s; max-width: 200px; text-align: center; align-self: center;">Send Email</button>
             </form>
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function() {
-    emailjs.init("Ig4a2FEmnLPJIGdms"); // Replace with your EmailJS User ID // Replace with your EmailJS User ID
+    emailjs.init("Ig4a2FEmnLPJIGdms"); // Replace with your EmailJS User ID
   })();
 
-  function sendEmail() {
+  function validateAndSendEmail() {
+    const form = document.getElementById('contact-form');
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    const reason = form.reason.value;
+
+    if (name === "" || email === "" || message === "" || reason === "") {
+        alert("Please fill in all fields before submitting.");
+        return;
+    }
+
     emailjs.sendForm('service_ulpiivo', 'template_nlr3zih', '#contact-form').then(function(response) {
         alert('SUCCESS! Your message has been sent.');
-        document.getElementById('contact-form').reset();
-      }, function(error) {
-        alert('FAILED... Please try again.');
-      })
-      .then(function(response) {
-        alert('SUCCESS! Your message has been sent.');
+        form.reset();
       }, function(error) {
         alert('FAILED... Please try again.');
       });
