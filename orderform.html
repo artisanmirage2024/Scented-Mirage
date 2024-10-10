@@ -1,0 +1,424 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/2e83955e27eb3bc82ee381538e8b8bb09c4aaafc/Assets/favicon-32x32.png">
+    <title>Scented Mirage Order Form</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #e4e4e4, #ffffff);
+            color: #292c38;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            width: 200px;
+        }
+        h2 {
+            color: #bc9c22;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #bc9c22;
+            margin-top: 15px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: box-shadow 0.3s;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            box-shadow: 0 0 10px #bc9c22;
+        }
+        .fragrance-selection {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .fragrance-column {
+            flex: 1;
+            background: #fdf5e6;
+            border-radius: 10px;
+            border: 1px solid #f1e2b8;
+            padding: 15px;
+        }
+        .fragrance-column label.dropdown-category {
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .quantity-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1e2b8;
+        }
+        .quantity-container label {
+            font-weight: bold;
+            color: #bc9c22;
+            flex: 1;
+        }
+        .quantity-container .price {
+            font-size: 0.9em;
+            margin-right: 10px;
+            color: #292c38;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button {
+            background: linear-gradient(90deg, #bc9c22, #e1c259);
+            color: #ffffff;
+            border: none;
+            padding: 15px 40px;
+            text-align: center;
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 30px auto;
+            max-width: 200px;
+        }
+        .button:hover {
+            background: linear-gradient(90deg, #292c38, #3e4452);
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fdf5e6;
+            border-radius: 10px;
+            border: 1px solid #f1e2b8;
+            color: #292c38;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .summary-row.shipping-fee {
+            border-bottom: 1px solid #d3c09c;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .summary-row .label {
+            font-weight: bold;
+        }
+        #total-amount {
+            font-weight: bold;
+        }
+        .note {
+            font-size: 0.85em;
+            color: #555;
+            font-style: italic;
+            margin-top: 10px;
+            text-align: left;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .inline-fields {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .inline-fields input[type="text"], .inline-fields input[type="email"] {
+            width: calc(50% - 10px);
+        }
+        .inline-fields.triple input[type="text"] {
+            width: calc(33.33% - 10px);
+        }
+    </style>
+    <script>
+        function updateSummary() {
+            let totalQuantity = 0;
+            let totalAmount = 0;
+            const shippingFee = 70; // Fixed shipping fee
+
+            const prices = {
+                'quantity-passion-fire': 270,
+                'quantity-ocean-breeze': 270,
+                'quantity-wild-elegance': 270,
+                'quantity-royal-conquest': 270,
+                'quantity-midnight-blue': 270,
+                'quantity-mystic-oasis': 270,
+                'quantity-dream-sky': 270,
+                'quantity-petal-silk': 270,
+                'quantity-urban-sandalwood': 270,
+                'quantity-scarlet-elixir': 270,
+                'quantity-luminous-bloom': 270,
+                'quantity-floral-elegance': 270,
+                'quantity-romantic-whisper': 270
+            };
+
+            const quantities = document.querySelectorAll('input[type="number"]');
+            quantities.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                totalQuantity += quantity;
+                totalAmount += quantity * prices[input.id];
+
+                // Update individual item total amount display
+                const amountDisplay = input.previousElementSibling;
+                if (amountDisplay) {
+                    const itemTotal = quantity * prices[input.id];
+                    amountDisplay.innerText = '₱ ' + itemTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            });
+
+            // Add shipping fee to total amount
+            totalAmount += shippingFee;
+
+            document.getElementById('total-quantity').innerText = totalQuantity;
+            document.getElementById('shipping-fee').innerText = '₱ ' + shippingFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function placeOrder() {
+            const totalQuantity = document.getElementById('total-quantity').innerText;
+            const totalAmount = document.getElementById('total-amount').innerText;
+            const shippingFee = document.getElementById('shipping-fee').innerText;
+
+            // Populate the order summary modal
+            document.getElementById('order-summary-content').innerHTML = `
+                <h3>Order Summary</h3>
+                <p>Total Quantity: ${totalQuantity}</p>
+                <p>Shipping Fee: ${shippingFee}</p>
+                <p>Grand Total Amount: ${totalAmount}</p>
+                <button onclick="confirmOrder()">Confirm</button>
+            `;
+
+            // Show the modal
+            document.getElementById('orderSummaryModal').style.display = 'block';
+        }
+
+        function confirmOrder() {
+            // Hide the summary modal
+            document.getElementById('orderSummaryModal').style.display = 'none';
+
+            // Show confirmation modal
+            document.getElementById('confirmationModal').style.display = 'block';
+
+            // Redirect after 3 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html'; // Replace 'index.html' with the correct URL for your homepage
+            }, 3000);
+        }
+
+        // Close modal function
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const quantityInputs = document.querySelectorAll('input[type="number"]');
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', updateSummary);
+            });
+            updateSummary();
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <img src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png" alt="Scented Mirage Logo">
+    </div>
+    <form action="javascript:void(0);" onsubmit="placeOrder()">
+        <h2>What is your Order?</h2>
+        <div class="fragrance-selection">
+            <div class="fragrance-column">
+                <label class="dropdown-category">For Him:</label>
+                <div class="quantity-container">
+                    <label>Passion Fire</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-passion-fire" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Ocean Breeze</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-ocean-breeze" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Wild Elegance</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-wild-elegance" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Royal Conquest</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-royal-conquest" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Midnight Blue</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-midnight-blue" value="0" min="0">
+                </div>
+            </div>
+            <div class="fragrance-column">
+                <label class="dropdown-category">For Her:</label>
+                <div class="quantity-container">
+                    <label>Mystic Oasis</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-mystic-oasis" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Dream Sky</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-dream-sky" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Petal Silk</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-petal-silk" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Urban Sandalwood</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-urban-sandalwood" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Scarlet Elixir</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-scarlet-elixir" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Luminous Bloom</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-luminous-bloom" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Floral Elegance</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-floral-elegance" value="0" min="0">
+                </div>
+                <div class="quantity-container">
+                    <label>Romantic Whisper</label>
+                    <span class="price">₱ 0.00</span>
+                    <input type="number" id="quantity-romantic-whisper" value="0" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-row">
+                <span class="label">Total Quantity:</span> <span id="total-quantity">0</span>
+            </div>
+            <div class="summary-row shipping-fee">
+                <span class="label">Shipping Fee:</span> <span id="shipping-fee">₱ 70.00</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Grand Total Amount:</span> <span id="total-amount">₱ 70.00</span>
+            </div>
+            <p class="note">* Shipping fee is fixed for all over the Philippines.</p>
+        </div>
+
+        <h2>Please provide your personal information below:</h2>
+        <div class="inline-fields">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+        </div>
+
+        <div class="inline-fields">
+            <input type="text" name="contact_number" placeholder="00000000000" pattern="\d{11}" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <h2>Delivery Address</h2>
+        <div class="inline-fields">
+            <input type="text" name="house_number_street_name" placeholder="House Number/Street Name" required>
+            <input type="text" name="barangay" placeholder="Barangay" required>
+        </div>
+        <div class="inline-fields triple">
+            <input type="text" name="province_city" placeholder="City/Municipality" required>
+            <input type="text" name="region" placeholder="Province" required>
+            <input type="text" name="postal_code" placeholder="Postal Code" required>
+        </div>
+
+        <button type="submit" class="button">Place Order</button>
+    </form>
+</div>
+
+<!-- Order Summary Modal -->
+<div id="orderSummaryModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('orderSummaryModal')">&times;</span>
+        <div id="order-summary-content"></div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('confirmationModal')">&times;</span>
+        <p>We're so happy you chose us! Your order is confirmed. A confirmation email will be sent to your inbox.</p>
+    </div>
+</div>
+
+</body>
+</html>
