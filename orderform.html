@@ -241,50 +241,98 @@
             document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        function generateOrderNumber() {
-            const firstName = document.querySelector('input[name="first_name"]').value;
-            const lastName = document.querySelector('input[name="last_name"]').value;
-            const contactNumber = document.querySelector('input[name="contact_number"]').value;
+            function generateOrderNumber() {
+        const firstName = document.querySelector('input[name="first_name"]').value;
+        const lastName = document.querySelector('input[name="last_name"]').value;
+        const contactNumber = document.querySelector('input[name="contact_number"]').value;
 
-            const initials = (firstName[0] || '') + (lastName[0] || '');
-            const lastFourDigits = contactNumber.slice(-4);
-            const orderNumber = `SM${initials.toUpperCase()}${lastFourDigits}${String(orderCount).padStart(6, '0')}`;
+        // Get initials from first and last name
+        const initials = (firstName[0] || '') + (lastName[0] || '');
+        // Get the last four digits of the contact number
+        const lastFourDigits = contactNumber.slice(-4);
+        // Generate a unique 6-digit random number
+        const uniqueNumber = Math.floor(100000 + Math.random() * 900000);
 
-            orderCount++;
-            return orderNumber;
-        }
+        // Construct the order number
+        const orderNumber = `SM${initials.toUpperCase()}${lastFourDigits}${uniqueNumber}`;
 
-        function placeOrder() {
-            const totalQuantity = document.getElementById('total-quantity').innerText;
-            const totalAmount = document.getElementById('total-amount').innerText;
-            const shippingFee = document.getElementById('shipping-fee').innerText;
-            const orderNumber = generateOrderNumber();
+        return orderNumber;
+    }
 
-            // Extract ordered fragrances
-            let orders = [];
-            const quantities = document.querySelectorAll('input[type="number"]');
-            quantities.forEach(input => {
-                const quantity = parseInt(input.value) || 0;
-                if (quantity > 0) {
-                    const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
-                    orders.push(`${fragranceLabel} (x${quantity})`);
-                }
-            });
+    function updateSummary() {
+        let totalQuantity = 0;
+        let totalAmount = 0;
+        const shippingFee = 70; // Fixed shipping fee
 
-            // Populate the order summary modal
-            document.getElementById('order-summary-content').innerHTML = `
-                <h3>Order Summary</h3>
-                <p>Order Number: ${orderNumber}</p>
-                <p>Items Ordered: ${orders.join(', ')}</p>
-                <p>Total Quantity: ${totalQuantity}</p>
-                <p>Standard Shipping Fee: ${shippingFee}</p>
-                <p>Grand Total Amount: ${totalAmount}</p>
-                <button onclick="confirmOrder()">Confirm</button>
-            `;
+        const prices = {
+            'quantity-passion-fire': 270,
+            'quantity-ocean-breeze': 270,
+            'quantity-wild-elegance': 270,
+            'quantity-royal-conquest': 270,
+            'quantity-midnight-blue': 270,
+            'quantity-mystic-oasis': 270,
+            'quantity-dream-sky': 270,
+            'quantity-petal-silk': 270,
+            'quantity-urban-sandalwood': 270,
+            'quantity-scarlet-elixir': 270,
+            'quantity-luminous-bloom': 270,
+            'quantity-floral-elegance': 270,
+            'quantity-romantic-whisper': 270
+        };
 
-            // Show the modal
-            document.getElementById('orderSummaryModal').style.display = 'block';
-        }
+        const quantities = document.querySelectorAll('input[type="number"]');
+        quantities.forEach(input => {
+            const quantity = parseInt(input.value) || 0;
+            totalQuantity += quantity;
+            totalAmount += quantity * prices[input.id];
+
+            // Update individual item total amount display
+            const amountDisplay = input.previousElementSibling;
+            if (amountDisplay) {
+                const itemTotal = quantity * prices[input.id];
+                amountDisplay.innerText = '₱ ' + itemTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+        });
+
+        // Add shipping fee to total amount
+        totalAmount += shippingFee;
+
+        document.getElementById('total-quantity').innerText = totalQuantity;
+        document.getElementById('shipping-fee').innerText = '₱ ' + shippingFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function placeOrder() {
+        const totalQuantity = document.getElementById('total-quantity').innerText;
+        const totalAmount = document.getElementById('total-amount').innerText;
+        const shippingFee = document.getElementById('shipping-fee').innerText;
+        const orderNumber = generateOrderNumber();
+
+        // Extract ordered fragrances
+        let orders = [];
+        const quantities = document.querySelectorAll('input[type="number"]');
+        quantities.forEach(input => {
+            const quantity = parseInt(input.value) || 0;
+            if (quantity > 0) {
+                const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
+                orders.push(`${fragranceLabel} (x${quantity})`);
+            }
+        });
+
+        // Populate the order summary modal
+        document.getElementById('order-summary-content').innerHTML = `
+            <h3>Order Summary</h3>
+            <p>Order Number: ${orderNumber}</p>
+            <p>Items Ordered: ${orders.join(', ')}</p>
+            <p>Total Quantity: ${totalQuantity}</p>
+            <p>Standard Shipping Fee: ${shippingFee}</p>
+            <p>Grand Total Amount: ${totalAmount}</p>
+            <button onclick="confirmOrder()">Confirm</button>
+        `;
+
+        // Show the modal
+        document.getElementById('orderSummaryModal').style.display = 'block';
+    }
 
         function confirmOrder() {
             // Extract customer information
@@ -333,7 +381,7 @@
             };
 
             // Send data to Google Sheets Web App
-            fetch("https://script.google.com/macros/s/AKfycbzv1_uD1CDU2ETk50GvHE6-4_Mk0vRM3i90KkoMTcnuejrnsWqmXxKRi7wBZMGN1E4/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbz7HHDawpa_rcvqBf_uM5grsh4pvdz33LQS7nDvKA1J1Xty3z_gBNZfPszly2kHOE0/exec", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
