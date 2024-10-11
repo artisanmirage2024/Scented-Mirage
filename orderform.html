@@ -260,10 +260,22 @@
             const shippingFee = document.getElementById('shipping-fee').innerText;
             const orderNumber = generateOrderNumber();
 
+            // Extract ordered fragrances
+            let orders = [];
+            const quantities = document.querySelectorAll('input[type="number"]');
+            quantities.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                if (quantity > 0) {
+                    const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
+                    orders.push(`${fragranceLabel} (x${quantity})`);
+                }
+            });
+
             // Populate the order summary modal
             document.getElementById('order-summary-content').innerHTML = `
                 <h3>Order Summary</h3>
                 <p>Order Number: ${orderNumber}</p>
+                <p>Items Ordered: ${orders.join(', ')}</p>
                 <p>Total Quantity: ${totalQuantity}</p>
                 <p>Standard Shipping Fee: ${shippingFee}</p>
                 <p>Grand Total Amount: ${totalAmount}</p>
