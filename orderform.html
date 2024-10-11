@@ -196,6 +196,8 @@
         }
     </style>
     <script>
+        let orderCount = 1;
+
         function updateSummary() {
             let totalQuantity = 0;
             let totalAmount = 0;
@@ -239,14 +241,29 @@
             document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
+        function generateOrderNumber() {
+            const firstName = document.querySelector('input[name="first_name"]').value;
+            const lastName = document.querySelector('input[name="last_name"]').value;
+            const contactNumber = document.querySelector('input[name="contact_number"]').value;
+
+            const initials = (firstName[0] || '') + (lastName[0] || '');
+            const lastFourDigits = contactNumber.slice(-4);
+            const orderNumber = `SM${initials.toUpperCase()}${lastFourDigits}${String(orderCount).padStart(6, '0')}`;
+
+            orderCount++;
+            return orderNumber;
+        }
+
         function placeOrder() {
             const totalQuantity = document.getElementById('total-quantity').innerText;
             const totalAmount = document.getElementById('total-amount').innerText;
             const shippingFee = document.getElementById('shipping-fee').innerText;
+            const orderNumber = generateOrderNumber();
 
             // Populate the order summary modal
             document.getElementById('order-summary-content').innerHTML = `
                 <h3>Order Summary</h3>
+                <p>Order Number: ${orderNumber}</p>
                 <p>Total Quantity: ${totalQuantity}</p>
                 <p>Standard Shipping Fee: ${shippingFee}</p>
                 <p>Grand Total Amount: ${totalAmount}</p>
@@ -382,13 +399,13 @@
 
         <h2>Please provide your personal information below</h2>
         <div class="inline-fields">
-            <input type="text" name="first_name" placeholder="First Name (ex. Jane)" required>
-            <input type="text" name="last_name" placeholder="Last Name (ex. Doe)" required>
+            <input type="text" name="first_name" placeholder="First Name (ex. Marlette)" required>
+            <input type="text" name="last_name" placeholder="Last Name (ex. Reyes)" required>
         </div>
 
         <div class="inline-fields">
-            <input type="text" name="contact_number" placeholder="Mobile No. (ex. 09102200210)" pattern="\d{11}" required>
-            <input type="email" name="email" placeholder="Email Address (ex. janedoe@gmail.com)" required>
+            <input type="text" name="contact_number" placeholder="Mobile No. (ex. 09502065406)" pattern="\d{11}" required>
+            <input type="email" name="email" placeholder="Email Address (ex. artisanmirage2024@gmail.com)" required>
         </div>
 
         <h2>Delivery Address</h2>
