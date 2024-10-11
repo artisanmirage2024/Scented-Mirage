@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
@@ -275,16 +275,74 @@
         }
 
         function confirmOrder() {
-            // Hide the summary modal
-            document.getElementById('orderSummaryModal').style.display = 'none';
+            // Extract customer information
+            const firstName = document.querySelector('input[name="first_name"]').value;
+            const lastName = document.querySelector('input[name="last_name"]').value;
+            const contactNumber = document.querySelector('input[name="contact_number"]').value;
+            const email = document.querySelector('input[name="email"]').value;
+            const houseNumberStreetName = document.querySelector('input[name="house_number_street_name"]').value;
+            const barangay = document.querySelector('input[name="barangay"]').value;
+            const cityMunicipality = document.querySelector('input[name="province_city"]').value;
+            const province = document.querySelector('input[name="region"]').value;
+            const postalCode = document.querySelector('input[name="postal_code"]').value;
 
-            // Show confirmation modal
-            document.getElementById('confirmationModal').style.display = 'block';
+            const totalQuantity = document.getElementById('total-quantity').innerText;
+            const totalAmount = document.getElementById('total-amount').innerText;
+            const orderNumber = generateOrderNumber();
 
-            // Redirect after 3 seconds
-            setTimeout(() => {
-                window.location.href = 'index.html'; // Replace 'index.html' with the correct URL for your homepage
-            }, 3000);
+            // Extract ordered fragrances
+            let orders = [];
+            const quantities = document.querySelectorAll('input[type="number"]');
+            quantities.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                if (quantity > 0) {
+                    const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
+                    orders.push(`${fragranceLabel} (x${quantity})`);
+                }
+            });
+
+            // Create order data object
+            const orderData = {
+                orderNumber: orderNumber,
+                orders: orders.join(', '),
+                quantity: totalQuantity,
+                amount: totalAmount,
+                totalQuantity: totalQuantity,
+                grandTotalAmount: totalAmount,
+                firstName: firstName,
+                lastName: lastName,
+                mobile: contactNumber,
+                email: email,
+                houseNumberStreetName: houseNumberStreetName,
+                barangay: barangay,
+                cityMunicipality: cityMunicipality,
+                province: province,
+                postalCode: postalCode
+            };
+
+            // Send data to Google Sheets Web App
+            fetch("https://script.google.com/macros/s/AKfycbzv1_uD1CDU2ETk50GvHE6-4_Mk0vRM3i90KkoMTcnuejrnsWqmXxKRi7wBZMGN1E4/exec", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                mode: "no-cors", // Allow the request despite CORS policy
+                body: JSON.stringify(orderData)
+            })
+                .then(response => {
+                    // Hide the summary modal and show the confirmation modal
+                    document.getElementById('orderSummaryModal').style.display = 'none';
+                    document.getElementById('confirmationModal').style.display = 'block';
+
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Replace 'index.html' with the correct URL for your homepage
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while confirming the order.");
+                });
         }
 
         // Close modal function
@@ -399,24 +457,24 @@
 
         <h2>Please provide your personal information below</h2>
         <div class="inline-fields">
-            <input type="text" name="first_name" placeholder="First Name (ex. Marlette)" required>
-            <input type="text" name="last_name" placeholder="Last Name (ex. Reyes)" required>
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
         </div>
 
         <div class="inline-fields">
-            <input type="text" name="contact_number" placeholder="Mobile No. (ex. 09502065406)" pattern="\d{11}" required>
-            <input type="email" name="email" placeholder="Email Address (ex. artisanmirage2024@gmail.com)" required>
+            <input type="text" name="contact_number" placeholder="11-Digit Mobile No." pattern="\d{11}" required>
+            <input type="email" name="email" placeholder="Email Address" required>
         </div>
 
         <h2>Delivery Address</h2>
         <div class="inline-fields">
-            <input type="text" name="house_number_street_name" placeholder="House Number/Street Name (ex. 003 Bayani St.)" required>
-            <input type="text" name="barangay" placeholder="Barangay (ex. Marulas)" required>
+            <input type="text" name="house_number_street_name" placeholder="House Number/Street Name" required>
+            <input type="text" name="barangay" placeholder="Barangay" required>
         </div>
         <div class="inline-fields triple">
-            <input type="text" name="province_city" placeholder="City/Municipality (ex. Valenzuela City)" required>
-            <input type="text" name="region" placeholder="Province (ex. Metro Manila)" required>
-            <input type="text" name="postal_code" placeholder="Postal Code (ex. 1440)" required>
+            <input type="text" name="province_city" placeholder="City/Municipality" required>
+            <input type="text" name="region" placeholder="Province" required>
+            <input type="text" name="postal_code" placeholder="Postal Code" required>
         </div>
 
         <button type="submit" class="button">Place Order</button>
