@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
@@ -196,7 +196,28 @@
         }
     </style>
     <script>
-        let orderCount = 1;
+        function generateOrderDate() {
+            const now = new Date();
+            return now.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+        }
+
+        function generateOrderNumber() {
+            const firstName = document.querySelector('input[name="first_name"]').value;
+            const lastName = document.querySelector('input[name="last_name"]').value;
+            const contactNumber = document.querySelector('input[name="contact_number"]').value;
+
+            // Get initials from first and last name
+            const initials = (firstName[0] || '') + (lastName[0] || '');
+            // Get the last four digits of the contact number
+            const lastFourDigits = contactNumber.slice(-4);
+            // Generate a unique 6-digit random number
+            const uniqueNumber = Math.floor(100000 + Math.random() * 900000);
+
+            // Construct the order number
+            const orderNumber = `SM${initials.toUpperCase()}${lastFourDigits}${uniqueNumber}`;
+
+            return orderNumber;
+        }
 
         function updateSummary() {
             let totalQuantity = 0;
@@ -241,98 +262,41 @@
             document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-            function generateOrderNumber() {
-        const firstName = document.querySelector('input[name="first_name"]').value;
-        const lastName = document.querySelector('input[name="last_name"]').value;
-        const contactNumber = document.querySelector('input[name="contact_number"]').value;
+        function placeOrder() {
+            updateSummary(); // Ensure summary is up to date before placing order
 
-        // Get initials from first and last name
-        const initials = (firstName[0] || '') + (lastName[0] || '');
-        // Get the last four digits of the contact number
-        const lastFourDigits = contactNumber.slice(-4);
-        // Generate a unique 6-digit random number
-        const uniqueNumber = Math.floor(100000 + Math.random() * 900000);
+            const totalQuantity = document.getElementById('total-quantity').innerText;
+            const totalAmount = document.getElementById('total-amount').innerText;
+            const shippingFee = document.getElementById('shipping-fee').innerText;
+            const orderNumber = generateOrderNumber();
+            const orderDate = generateOrderDate(); // Get order date
 
-        // Construct the order number
-        const orderNumber = `SM${initials.toUpperCase()}${lastFourDigits}${uniqueNumber}`;
+            // Extract ordered fragrances
+            let orders = [];
+            const quantities = document.querySelectorAll('input[type="number"]');
+            quantities.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                if (quantity > 0) {
+                    const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
+                    orders.push(`${fragranceLabel} (x${quantity})`);
+                }
+            });
 
-        return orderNumber;
-    }
+            // Populate the order summary modal
+            document.getElementById('order-summary-content').innerHTML = `
+                <h3>Order Summary</h3>
+                <p>Order Number: ${orderNumber}</p>
+                <p>Order Date: ${orderDate}</p> <!-- Display order date -->
+                <p>Items Ordered: ${orders.join(', ')}</p>
+                <p>Total Quantity: ${totalQuantity}</p>
+                <p>Standard Shipping Fee: ${shippingFee}</p>
+                <p>Grand Total Amount: ${totalAmount}</p>
+                <button onclick="confirmOrder()">Confirm</button>
+            `;
 
-    function updateSummary() {
-        let totalQuantity = 0;
-        let totalAmount = 0;
-        const shippingFee = 70; // Fixed shipping fee
-
-        const prices = {
-            'quantity-passion-fire': 270,
-            'quantity-ocean-breeze': 270,
-            'quantity-wild-elegance': 270,
-            'quantity-royal-conquest': 270,
-            'quantity-midnight-blue': 270,
-            'quantity-mystic-oasis': 270,
-            'quantity-dream-sky': 270,
-            'quantity-petal-silk': 270,
-            'quantity-urban-sandalwood': 270,
-            'quantity-scarlet-elixir': 270,
-            'quantity-luminous-bloom': 270,
-            'quantity-floral-elegance': 270,
-            'quantity-romantic-whisper': 270
-        };
-
-        const quantities = document.querySelectorAll('input[type="number"]');
-        quantities.forEach(input => {
-            const quantity = parseInt(input.value) || 0;
-            totalQuantity += quantity;
-            totalAmount += quantity * prices[input.id];
-
-            // Update individual item total amount display
-            const amountDisplay = input.previousElementSibling;
-            if (amountDisplay) {
-                const itemTotal = quantity * prices[input.id];
-                amountDisplay.innerText = '₱ ' + itemTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            }
-        });
-
-        // Add shipping fee to total amount
-        totalAmount += shippingFee;
-
-        document.getElementById('total-quantity').innerText = totalQuantity;
-        document.getElementById('shipping-fee').innerText = '₱ ' + shippingFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        document.getElementById('total-amount').innerText = '₱ ' + totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-
-    function placeOrder() {
-        const totalQuantity = document.getElementById('total-quantity').innerText;
-        const totalAmount = document.getElementById('total-amount').innerText;
-        const shippingFee = document.getElementById('shipping-fee').innerText;
-        const orderNumber = generateOrderNumber();
-
-        // Extract ordered fragrances
-        let orders = [];
-        const quantities = document.querySelectorAll('input[type="number"]');
-        quantities.forEach(input => {
-            const quantity = parseInt(input.value) || 0;
-            if (quantity > 0) {
-                const fragranceLabel = input.previousElementSibling.previousElementSibling.innerText;
-                orders.push(`${fragranceLabel} (x${quantity})`);
-            }
-        });
-
-        // Populate the order summary modal
-        document.getElementById('order-summary-content').innerHTML = `
-            <h3>Order Summary</h3>
-            <p>Order Number: ${orderNumber}</p>
-            <p>Items Ordered: ${orders.join(', ')}</p>
-            <p>Total Quantity: ${totalQuantity}</p>
-            <p>Standard Shipping Fee: ${shippingFee}</p>
-            <p>Grand Total Amount: ${totalAmount}</p>
-            <button onclick="confirmOrder()">Confirm</button>
-        `;
-
-        // Show the modal
-        document.getElementById('orderSummaryModal').style.display = 'block';
-    }
+            // Show the modal
+            document.getElementById('orderSummaryModal').style.display = 'block';
+        }
 
         function confirmOrder() {
             // Extract customer information
@@ -349,6 +313,7 @@
             const totalQuantity = document.getElementById('total-quantity').innerText;
             const totalAmount = document.getElementById('total-amount').innerText;
             const orderNumber = generateOrderNumber();
+            const orderDate = generateOrderDate(); // Add order date
 
             // Extract ordered fragrances
             let orders = [];
@@ -377,11 +342,12 @@
                 barangay: barangay,
                 cityMunicipality: cityMunicipality,
                 province: province,
-                postalCode: postalCode
+                postalCode: postalCode,
+                orderDate: orderDate // Include order date in order data
             };
 
             // Send data to Google Sheets Web App
-            fetch("https://script.google.com/macros/s/AKfycbz7HHDawpa_rcvqBf_uM5grsh4pvdz33LQS7nDvKA1J1Xty3z_gBNZfPszly2kHOE0/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbwcgflvZTplfg98xvpORkfUVwfwwV-v8m615hj3HHrhL-RRDSNZrFMmxJCrCK24ABk/exec", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
