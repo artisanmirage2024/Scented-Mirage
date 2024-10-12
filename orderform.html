@@ -166,10 +166,37 @@
             margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
+            width: 90%;
+            max-width: 600px;
             border-radius: 15px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .modal-content h3 {
             text-align: center;
+            color: #bc9c22;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .modal-content p {
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        .modal-content button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #bc9c22, #e1c259);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .modal-content button:hover {
+            background: linear-gradient(90deg, #292c38, #3e4452);
         }
         .close {
             color: #aaa;
@@ -285,12 +312,12 @@
             // Populate the order summary modal
             document.getElementById('order-summary-content').innerHTML = `
                 <h3>Order Summary</h3>
-                <p>Order Number: ${orderNumber}</p>
-                <p>Order Date: ${orderDate}</p> <!-- Display order date -->
-                <p>Items Ordered: ${orders.join(', ')}</p>
-                <p>Total Quantity: ${totalQuantity}</p>
-                <p>Standard Shipping Fee: ${shippingFee}</p>
-                <p>Grand Total Amount: ${totalAmount}</p>
+                <p><strong>Order Number:</strong> ${orderNumber}</p>
+                <p><strong>Order Date:</strong> ${orderDate}</p> <!-- Display order date -->
+                <p><strong>Items Ordered:</strong> ${orders.join(', ')}</p>
+                <p><strong>Total Quantity:</strong> ${totalQuantity}</p>
+                <p><strong>Standard Shipping Fee:</strong> ${shippingFee}</p>
+                <p><strong>Grand Total Amount:</strong> ${totalAmount}</p>
                 <button onclick="confirmOrder()">Confirm</button>
             `;
 
