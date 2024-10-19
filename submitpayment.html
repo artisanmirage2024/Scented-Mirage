@@ -94,7 +94,7 @@
             <input type="file" id="receipt" name="receipt" accept="image/*" required>
             <label for="reference">Gcash Reference Number:</label>
             <input type="text" id="reference" name="reference" required>
-            <input type="hidden" id="orderNumber" name="orderNumber" value="SMJR0035350768">
+            <input type="hidden" id="orderNumber" name="orderNumber" value="">
             <div class="button-container">
                 <button type="submit">Submit</button>
             </div>
@@ -105,5 +105,13 @@
             <p>Thank you for your purchase! We will process your order once we verify the payment.</p>
         </div>
     </div>
+    <script>
+        // Extract the orderNumber from the URL and set it in the hidden input field
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderNumber = urlParams.get('orderNumber');
+        if (orderNumber) {
+            document.getElementById('orderNumber').value = orderNumber;
+        }
+    </script>
 </body>
 </html>
