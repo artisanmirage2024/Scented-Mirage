@@ -1,112 +1,107 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Receipt Confirmation - Scented Mirage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Payment Receipt Confirmation</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-            background-color: #e4e4e4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .confirmation-container {
-            width: 80%;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 30px;
+        .form-container {
+            max-width: 500px;
+            width: 100%;
             background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin: 20px;
         }
         .logo {
+            text-align: center;
             margin-bottom: 20px;
         }
         .logo img {
-            width: 150px;
+            width: 120px;
+            height: auto;
         }
         h2 {
-            color: #bc9c22;
-            font-size: 1.8em;
             text-align: center;
-        }
-        form {
-            margin-top: 20px;
-            text-align: left;
+            color: #bc9c22;
+            margin-bottom: 20px;
         }
         label {
-            font-size: 1.1em;
-            color: #292c38;
+            font-size: 16px;
+            margin-bottom: 5px;
             display: block;
-            margin-bottom: 10px;
+            color: #333;
         }
         input[type="file"],
         input[type="text"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #bc9c22;
-            border-radius: 5px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
+            font-size: 14px;
         }
-        .submit-button {
-        display: block;
-        width: fit-content; /* Set the button width to fit its content */
-        padding: 8px 16px; /* Adjust padding as needed */
-        background-color: #bc9c22;
-        color: #ffffff;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 1em; /* Adjust font size if needed */
-        cursor: pointer;
-        border: none;
-        margin: 20px auto; /* Center-align the button */
+        .button-container {
+            display: flex;
+            justify-content: center;
         }
-        .submit-button:hover {
-            background-color: #a3821e;
+        button {
+            width: 200px;
+            padding: 12px;
+            background-color: #bc9c22;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .invoice-footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #292c38;
+        button:hover {
+            background-color: #a8881c;
         }
-        .invoice-footer p {
-            font-size: 0.9em;
-            color: #555;
-        }
-        .payment-details {
+        .info {
             margin-top: 20px;
-            font-size: 1em;
-            color: #292c38;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+        .info b {
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="confirmation-container">
+    <div class="form-container">
         <div class="logo">
-            <img src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/main/Assets/logo.png" alt="Scented Mirage Logo">
+            <img src="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/refs/heads/main/Assets/logo.png" alt="Scented Mirage Logo">
         </div>
         <h2>Payment Receipt Confirmation</h2>
-        <form action="/submit-receipt" method="POST" enctype="multipart/form-data">
+        <form action="https://script.google.com/macros/s/AKfycby2UY9IoAqaR8u9zZSUV3OBaRClCOvGYPsMQ9ukOGeAh5gpB_Smems3j0G7MtQJINI/exec" method="POST" enctype="multipart/form-data">
             <label for="receipt">Upload Gcash Receipt:</label>
             <input type="file" id="receipt" name="receipt" accept="image/*" required>
-            
             <label for="reference">Gcash Reference Number:</label>
             <input type="text" id="reference" name="reference" required>
-            
-            <button type="submit" class="submit-button">Submit</button>
+            <input type="hidden" id="orderNumber" name="orderNumber" value="SMJR0035350768">
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
         </form>
-
-        <div class="payment-details">
-            <p><strong>Gcash Account Number:</strong> 0950 206 5406</p>
-            <p><strong>Account Name:</strong> MA*****E R.</p>
-        </div>
-
-        <div class="invoice-footer">
+        <div class="info">
+            <p>Gcash Account Number: <b>0950 206 5406</b></p>
+            <p>Account Name: <b>MA******E R.</b></p>
             <p>Thank you for your purchase! We will process your order once we verify the payment.</p>
         </div>
     </div>
