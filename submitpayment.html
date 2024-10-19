@@ -111,6 +111,9 @@
         const orderNumber = urlParams.get('orderNumber');
         if (orderNumber) {
             document.getElementById('orderNumber').value = orderNumber;
+            console.log("Order Number from URL: ", orderNumber);  // Debugging log to verify extraction
+        } else {
+            alert("Order Number is missing from the URL. Please check the link and try again.");
         }
     </script>
 </body>
