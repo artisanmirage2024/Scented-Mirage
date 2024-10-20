@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/2e83955e27eb3bc82ee381538e8b8bb09c4aaafc/Assets/favicon-32x32.png">
+    <link rel="stylesheet" href="style.css">
+    <title>Order Tracking Timeline</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #292c38, #bc9c22);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .header-nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .header-nav .logo {
+            font-size: 1.8em;
+            color: #bc9c22;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header-nav nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .header-nav nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .header-nav nav a:hover {
+            color: #bc9c22;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown .dropbtn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #292c38;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #444;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(188, 156, 34, 0.5);
+            color: #292c38;
+        }
+
+        .messenger-button {
+            background-color: #0084ff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .messenger-button:hover {
+            background-color: #005bb5;
+        }
+
+        .order-button {
+            background-color: #bc9c22;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .order-button:hover {
+            background-color: #ffffff;
+            color: #292c38;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 150px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            color: #292c38;
+        }
+
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .timeline-header h1 {
+            font-size: 1.8em;
+            color: #bc9c22;
+            margin: 0;
+        }
+
+        .order-input-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .order-input-container input {
+            padding: 10px;
+            font-size: 1em;
+            width: 300px;
+            border: 2px solid #bc9c22;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .order-input-container button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #bc9c22;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .order-input-container button:hover {
+            background-color: #a8881c;
+        }
+
+        .timeline-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            position: relative;
+            min-height: 200px;
+            padding: 40px;
+        }
+
+        .timeline-item {
+            position: relative;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            padding: 40px;
+            transition: transform 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background-color: #bc9c22;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 5px #ffffff;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #bc9c22;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .timeline-status {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #292c38;
+        }
+
+        .timeline-message {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .timeline-line {
+            position: absolute;
+            width: 4px;
+            background-color: #bc9c22;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .timeline-header h1 {
+                font-size: 1.5em;
+            }
+
+            .timeline-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <div class="header-nav">
+        <a href="index.html" class="logo">Scented Mirage</a>
+        <nav>
+            <a href="discover.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Fragrance</button>
+                <div class="dropdown-content">
+                    <a href="#for-him">For Him</a>
+                    <a href="#for-her">For Her</a>
+                </div>
+            </div>
+            <a href="contactfaq.html">Contact Us & FAQs</a>
+            <a href="orderform.html" class="order-button">Order Here!</a>
+            <a href="https://m.me/370970646104189" class="messenger-button">Let's chat in Messenger</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="timeline-header">
+            <h1>Order Tracking Timeline</h1>
+        </div>
+        <div class="order-input-container">
+            <input type="text" id="orderNumberInput" placeholder="Enter Order Number">
+            <button onclick="fetchOrderUpdates()">Track Order</button>
+        </div>
+        <div class="timeline-wrapper" id="tracking-timeline">
+            <div id="loading-message" style="text-align: center; color: #555;">Please enter an order number to track your package.</div>
+            <!-- Timeline Items will be dynamically inserted here -->
+        </div>
+    </div>
+    <script>
+        // Replace this URL with the web app URL of your Google Apps Script
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbwgHyT8SJralCDIZC5edCzXlNKo2kqOAr8qOLk5JR2kTGmsuDVP4DVYKanyoMspmD0/exec";
+
+        // Function to fetch data from Google Apps Script Web App
+        async function fetchOrderUpdates() {
+            const orderNumber = document.getElementById('orderNumberInput').value;
+            const timelineContainer = document.getElementById('tracking-timeline');
+            const loadingMessage = document.getElementById('loading-message');
+
+            if (!orderNumber) {
+                timelineContainer.innerHTML = loadingMessage.outerHTML;
+                return;
+            }
+            
+            // Display a loading message while fetching data
+            timelineContainer.innerHTML = '<p style="text-align: center; color: #555;">Loading updates, please wait...</p>';
+            
+            try {
+                const response = await fetch(`${webAppUrl}?orderNumber=${orderNumber}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const orderUpdates = await response.json();
+                populateTimeline(orderUpdates);
+            } catch (error) {
+                console.error('Error fetching order updates:', error);
+                alert('Unable to fetch order details. Please try again later.');
+                timelineContainer.innerHTML = loadingMessage.outerHTML; // Reset to initial message if failed
+            }
+        }
+
+        // Function to populate the timeline with fetched data
+        function populateTimeline(orderUpdates) {
+            const timelineContainer = document.getElementById('tracking-timeline');
+            timelineContainer.innerHTML = '';
+
+            if (orderUpdates.length === 0) {
+                timelineContainer.innerHTML = '<p style="text-align: center; color: #555;">No updates found for this order number.</p>';
+                return;
+            }
+
+            orderUpdates.forEach((update, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.classList.add('timeline-item');
+
+                const dotElement = document.createElement('div');
+                dotElement.classList.add('timeline-dot');
+
+                const contentElement = document.createElement('div');
+                contentElement.classList.add('timeline-content');
+
+                const dateElement = document.createElement('div');
+                dateElement.classList.add('timeline-date');
+                dateElement.textContent = update.date;
+
+                const statusElement = document.createElement('div');
+                statusElement.classList.add('timeline-status');
+                statusElement.textContent = update.status;
+
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('timeline-message');
+                messageElement.textContent = update.message;
+
+                contentElement.appendChild(dateElement);
+                contentElement.appendChild(statusElement);
+                contentElement.appendChild(messageElement);
+                timelineItem.appendChild(dotElement);
+                timelineItem.appendChild(contentElement);
+
+                timelineContainer.appendChild(timelineItem);
+            });
+        }
+    </script>
+</body>
+</html>
