@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/2e83955e27eb3bc82ee381538e8b8bb09c4aaafc/Assets/favicon-32x32.png">
-    <link rel="stylesheet" href="style.css">
-    <title>Scented Mirage - Discover Our Collection</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/artisanmirage2024/Scented-Mirage/2e83955e27eb3bc82ee381538e8b8bb09c4aaafc/Assets/favicon-32x32.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/blanka" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <title>Scented Mirage</title>
     <style>
-        body, html {
+       body, html {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -15,25 +20,27 @@
             overflow-x: hidden;
         }
 
-        .header-nav {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 10px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-sizing: border-box;
-        }
+    .header-nav {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-sizing: border-box;
+    }
 
-        .header-nav .logo {
-            font-size: 1.8em;
-            color: #bc9c22;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.header-nav .logo {
+    font-size: 2em;
+    color: #bc9c22;  /* or adjust to the color you want */
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Blanka', sans-serif;
+    letter-spacing: 3px;  /* Increase the spacing to spread out the letters */
+}
 
         .header-nav nav {
             display: flex;
@@ -64,10 +71,6 @@
             cursor: pointer;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -76,6 +79,10 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
             border-radius: 5px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .dropdown-content a {
@@ -87,7 +94,7 @@
         }
 
         .dropdown-content a:hover {
-            background-color: rgba(188, 156, 34, 0.5); /* Semi-transparent background on hover */
+            background-color: rgba(188, 156, 34, 0.5);
             color: #292c38;
         }
 
@@ -107,7 +114,7 @@
             background-color: #005bb5;
         }
 
-        .order-button {
+        .order-bag-button {
             background-color: #bc9c22;
             color: #ffffff;
             text-decoration: none;
@@ -117,106 +124,287 @@
             border: none;
             cursor: pointer;
             white-space: nowrap;
-        }
-
-        .order-button:hover {
-            background-color: #ffffff;
-            color: #292c38;
-        }
-
-        .header {
-            text-align: center;
-            padding: 120px 20px 50px 20px;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2em;
-        }
-
-        .about-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .about-section div {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .about-content p, .meaning-content p {
-            font-size: 1.2em;
-            line-height: 1.6em;
-            text-align: justify; /* Justify the text */
-        }
-
-        .about-content h2, .meaning-content h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .category-section {
-            text-align: center;
-            margin: 40px auto;
-        }
-
-        .category-section h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .category-buttons {
             display: flex;
-            justify-content: center;
-            gap: 40px;
+            align-items: center;
+            gap: 10px;
         }
 
-        .category-buttons button {
-            background-color: #bc9c22;
-            color: #292c38;
-            border: none;
-            padding: 15px 30px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 1.2em;
-        }
-
-        .category-buttons button:hover {
+        .order-bag-button:hover {
             background-color: #ffffff;
             color: #292c38;
         }
 
-        .footer {
-            background-color: rgba(0, 0, 0, 0.8);
+        .products-container {
+            margin-top: 40px;
             padding: 20px;
+            background-color: transparent;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+
+        .products-container h2 {
             text-align: center;
             color: #ffffff;
-            position: relative;
-            bottom: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #f3f3f3, #e6e6e6);
+            padding: 30px;
+            border: 1px solid #d1d1d1;
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:hover {
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .product-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #292c38;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .add-to-bag {
+            background-color: #292c38;
+            color: #ffffff;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .add-to-bag:hover {
+            background-color: #bc9c22;
+            transform: scale(1.05);
+        }
+
+        .clear-filters-button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            background-color: #bc9c22;
+            color: #ffffff;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .clear-filters-button:hover {
+            background-color: #a8881c;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+/* Customize Select2 dropdown container */
+    .select2-container--default .select2-selection--multiple {
+        background-color: #ffffff; /* Background of the dropdown box */
+        border: 3px solid #bc9c22; /* Border color */
+        color: #ffffff; /* Text color */
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    /* Customize the dropdown items */
+    .select2-container--default .select2-results__option {
+        background-color: #292c38; /* Background color of dropdown items */
+        color: #ffffff; /* Text color of dropdown items */
+    }
+
+    /* Change the color of selected dropdown items */
+    .select2-container--default .select2-results__option--highlighted {
+        background-color: #bc9c22; /* Highlighted background color for the selected item */
+        color: #292c38; /* Highlighted text color for the selected item */
+    }
+
+    /* Customize the selected tags in the dropdown */
+    .select2-container--default .select2-selection__choice {
+        background-color: #292c38; /* Background color of the selected choice/tag */
+        border: 1px solid #bc9c22; /* Border color for the selected choice/tag */
+        color: #ffffff; /* Text color for the selected choice/tag */
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    /* Customize the remove (x) button of the selected tags */
+    .select2-container--default .select2-selection__choice__remove {
+        color: #ffffff; /* Color for the 'x' to remove tag */
+        margin-right: 5px;
+    }
+
+    .select2-container--default .select2-selection__choice__remove:hover {
+        color: #bc9c22; /* Change color when hovering over 'x' */
+    }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
             width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
-        .footer p {
-            margin: 5px 0;
-            font-size: 1em;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            color: #292c38;
         }
 
-        .footer a {
-            color: #bc9c22;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
             text-decoration: none;
+            cursor: pointer;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .modal button {
+            background-color: #292c38;
+            color: #ffffff;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .modal button:hover {
+            background-color: #bc9c22;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .quantity-selector input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            font-size: 1em;
+            margin: 0 10px;
+            border: 1px solid #888;
+            border-radius: 5px;
+        }
+
+        .quantity-selector button {
+            background-color: #292c38;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        footer {
+            padding: 20px 40px;
+            background-color: #292c38;
+            color: #ffffff;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .shopping-bag-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f8f8f8, #e0e0e0);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .shopping-bag-item:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .shopping-bag-item p {
+            margin: 0;
+            color: #292c38;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .shopping-bag-item button {
+            background-color: #bc9c22;
+            color: #ffffff;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .shopping-bag-item button:hover {
+            background-color: #292c38;
+            color: #ffffff;
+        }
+
+        #shoppingBagModal .modal-content {
+            max-width: 700px;
+            padding: 30px;
+        }
+
+        #shoppingBagModal h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: #bc9c22;
+        }
+
+        #bagItems {
+            margin-bottom: 20px;
+        }
+
+        #shoppingBagModal button.checkout-button {
+            background-color: #292c38;
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #shoppingBagModal button.checkout-button:hover {
+            background-color: #bc9c22;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -235,57 +423,376 @@
             </div>
             <a href="contactfaq.html">Contact Us & FAQs</a>
             <a href="track.html">Track & Trace</a>
-            <a href="orderform.html" class="order-button">Order Here!</a>
+            <button class="order-bag-button" onclick="openBagModal()">
+                <span>You have <span id='orderCount'>0</span> order(s)</span>
+                <span>View Bag</span>
+            </button>
             <a href="https://m.me/370970646104189" class="messenger-button">Let's chat in Messenger</a>
         </nav>
     </div>
 
-    <!-- Welcome Section -->
-    <div class="header">
-        <h1>Welcome to Scented Mirage</h1>
-        <p>Discover perfumes that transport you beyond the ordinary and evoke emotions, memories, and dreams.</p>
-    </div>
-
-    <!-- About Us Section -->
-    <div class="about-section">
-        <!-- About Us Content -->
-        <div class="about-content">
-            <h2>About Us</h2>
-            <p>
-                At Scented Mirage, we believe that scents have the power to transform your world. Our carefully crafted fragrances are designed to evoke emotions, awaken memories, and inspire dreams. Whether you are looking for something refreshing, bold, romantic, or timeless, our collection offers a scent for every occasion and every personality.
-            </p>
-            <p>
-                We take pride in sourcing high-quality ingredients to ensure that each perfume resonates with the unique identity of the wearer. Our mission is to help you express yourself through the art of fragrance, making every moment unforgettable.
-            </p>
-        </div>
-        <!-- Meaning Content -->
-        <div class="meaning-content">
-            <h2>Meaning of "Scented Mirage"</h2>
-            <p>
-                <strong>Scented:</strong> Carrying a pleasant smell, something that evokes memories, emotions, and feelings through its fragrance.
-            </p>
-            <p>
-                <strong>Mirage:</strong> An optical illusion, something that appears real but may be elusive or fleeting, often symbolizing dreams or visions.
-            </p>
-            <p>
-                <strong>Description:</strong> The combination of "Scented" and "Mirage" embodies the idea of an enchanting fragrance that sparks the imagination—creating experiences and memories that feel almost dreamlike, yet deeply resonate with one's senses.
-            </p>
-        </div>
-    </div>
-
-    <!-- Category Section with Buttons -->
-    <div class="category-section">
-        <h2>Choose your fragrance</h2>
-        <div class="category-buttons">
-            <button onclick="location.href='#for-him'">For Him</button>
-            <button onclick="location.href='#for-her'">For Her</button>
+    <!-- Filter Section Container -->
+    <div class="filter-container" style="margin-top: 100px;">
+        <h2 style="text-align: center; margin-bottom: 40px;">Discover Your Signature Scent</h2>
+        <form id="filter-form" style="display: flex; gap: 1%; justify-content: space-around; align-items: center; width: 100%; margin: 0 auto; flex-wrap: nowrap;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance DNA</h3>
+                <select id="fragrance-dna" style="flex: 1; min-width: 150px;" multiple></select>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance Family</h3>
+                <select id="fragrance-family" style="width: 180px;" multiple></select>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance Concentration</h3>
+                <select id="fragrance-concentration" style="flex: 1; min-width: 150px;" multiple></select>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance Occasion</h3>
+                <select id="fragrance-occasion" style="width: 200px;" multiple></select>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance Generation</h3>
+                <select id="fragrance-generation" style="width: 200px;" multiple></select>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="margin: 0 0 10px;">Fragrance Personality</h3>
+                <select id="fragrance-personality" style="width: 200px;" multiple></select>
+            </div>
+        </form>
+        <div style="text-align: center; padding: 20px;">
+            <button onclick="clearFilters()" class="clear-filters-button">Clear Filters</button>
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <div id="contact" class="footer">
-        <p>Contact Us</p>
-        <p>Email: <a href="mailto:artisanmirage2024@gmail.com">artisanmirage2024@gmail.com</a> | Phone: 0950 206 5406 | <a href="https://www.facebook.com/scentedmirage">Facebook Page</a> | <a href="https://m.me/370970646104189">Messenger</a></p>
+<!-- Product Section Container -->
+<div class="products-container">
+    <h2>Our Featured Products</h2>
+    <div class="product-grid" id="products"></div>
+</div>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalProductName"></h2>
+        <div id="modalProductOptions" style="margin-top: 20px;">
+            <label for="volumeSelection" style="font-weight: bold;">Select Volume:</label>
+            <select id="volumeSelection" style="width: 100%; margin-top: 10px; padding: 10px; border-radius: 5px; border: 1px solid #888;">
+                <option value="10 ml">10 ml</option>
+                <option value="30 ml">30 ml</option>
+                <option value="50 ml">50 ml</option>
+                <option value="100 ml">100 ml</option>
+            </select>
+            <div style="margin-top: 20px; font-weight: bold;">
+                <span>Price: </span><span id="priceDisplay">₱ 54.00</span>
+            </div>
+        </div>
+        <div class="quantity-selector">
+            <button onclick="changeQuantity(-1)">-</button>
+            <input type="text" id="quantityInput" value="1" readonly />
+            <button onclick="changeQuantity(1)">+</button>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="addToBagFromModal()">Add to Bag</button>
+            <button onclick="viewDetails()" style="background-color: #fff; color: #292c38; border: 1px solid #292c38;">View Details</button>
+        </div>
     </div>
+</div>
+
+<!-- Shopping Bag Modal -->
+<div id="shoppingBagModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeBagModal()">&times;</span>
+        <h2>Your Shopping Bag</h2>
+        <div id="bagItems"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="checkout()" class="checkout-button">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Initialize the Select2 dropdowns for better UI
+        $('#fragrance-dna, #fragrance-family, #fragrance-concentration, #fragrance-occasion, #fragrance-generation, #fragrance-personality').select2({
+            width: 'resolve'
+        });
+
+        // Fetch products and initialize the dropdown filters
+        fetchProducts();
+        
+        // Add change event listeners to all dropdowns for automatic filtering
+        $('#fragrance-dna, #fragrance-family, #fragrance-concentration, #fragrance-occasion, #fragrance-generation, #fragrance-personality').on('change', filterProducts);
+
+        // Update price when volume changes
+        $('#volumeSelection').on('change', updatePrice);
+    });
+
+    let products = [];
+    let shoppingBag = [];
+
+    // Fetch the products from the provided API
+    async function fetchProducts() {
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycby7jaaNhvDXgySvGxr_JFPSd9vCiy-eHR9ERskVsn3iXW9Mu5CK3hbxjy9vGzu66Hvh/exec');
+            const data = await response.json();
+
+            if (data && Array.isArray(data.fragranceDB)) {
+                products = data.fragranceDB;
+                renderProducts(products); // Render all products initially
+            } else {
+                document.getElementById('products').innerText = 'No products available at the moment.';
+            }
+
+            // Populate the filter dropdowns
+            if (data && Array.isArray(data.filters)) {
+                const dropdowns = {
+                    'fragrance-dna': new Set(),
+                    'fragrance-family': new Set(),
+                    'fragrance-concentration': new Set(),
+                    'fragrance-occasion': new Set(),
+                    'fragrance-generation': new Set(),
+                    'fragrance-personality': new Set()
+                };
+
+                // Extract unique filter options from the data
+                data.filters.forEach(filter => {
+                    if (filter.gender) dropdowns['fragrance-dna'].add(filter.gender);
+                    if (filter.fragranceFamily) dropdowns['fragrance-family'].add(filter.fragranceFamily);
+                    if (filter.intensity) dropdowns['fragrance-concentration'].add(filter.intensity);
+                    if (filter.occasion) dropdowns['fragrance-occasion'].add(filter.occasion);
+                    if (filter.ageGroup) dropdowns['fragrance-generation'].add(filter.ageGroup);
+                    if (filter.personalityType) dropdowns['fragrance-personality'].add(filter.personalityType);
+                });
+
+                // Populate each dropdown
+                for (const [dropdownId, valuesSet] of Object.entries(dropdowns)) {
+                    populateSelect(document.getElementById(dropdownId), valuesSet);
+                }
+            }
+        } catch (error) {
+            document.getElementById('products').innerText = 'No products available at the moment.';
+        }
+    }
+
+    // Populate a select dropdown with the given data set
+    function populateSelect(selectElement, dataSet) {
+        selectElement.innerHTML = ''; // Clear previous options
+        dataSet.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            selectElement.appendChild(option);
+        });
+    }
+
+    // Render products into the product grid
+    function renderProducts(filteredProducts) {
+        const productGrid = document.getElementById('products');
+        productGrid.innerHTML = '';
+
+        if (filteredProducts.length === 0) {
+            productGrid.innerText = 'No products match the selected filters.';
+        } else {
+            filteredProducts.forEach((product) => {
+                const productName = product.productName || 'No Name Available';
+                const productGender = product.gender || 'Gender Not Specified';
+                const productDescription = product.description || 'Description Not Available';
+
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <h3 class="product-title" style="color: #bc9c22;">${productName}</h3>
+                    <p class="product-gender" style="color: #292c38;">${productGender}</p>
+                    <p class="product-description" style="color: #292c38;">${productDescription}</p>
+                    <button class="add-to-bag" onclick="openModal('${productName}')">Add to Bag</button>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+    }
+
+    // Automatically filter products based on selected filter values
+    function filterProducts() {
+        // Get the selected values from all the dropdowns
+        const selectedFilters = {
+            gender: $('#fragrance-dna').val(),
+            fragranceFamily: $('#fragrance-family').val(),
+            intensity: $('#fragrance-concentration').val(),
+            occasion: $('#fragrance-occasion').val(),
+            ageGroup: $('#fragrance-generation').val(),
+            personalityType: $('#fragrance-personality').val()
+        };
+
+        // Filter the products based on the selected filter values
+        const filteredProducts = products.filter(product => {
+            return (
+                // Gender (Fragrance DNA) filter - only show products matching any selected value, if selected
+                (!selectedFilters.gender.length || selectedFilters.gender.includes(product.gender)) &&
+                
+                // Fragrance Family filter - only show products that match any of the selected families
+                (!selectedFilters.fragranceFamily.length || selectedFilters.fragranceFamily.some(selected => product.fragranceFamily.toLowerCase().includes(selected.toLowerCase()))) &&
+                
+                // Fragrance Concentration filter - only show products that match any of the selected concentrations
+                (!selectedFilters.intensity.length || selectedFilters.intensity.some(selected => product.intensity.toLowerCase().includes(selected.toLowerCase()))) &&
+                
+                // Fragrance Occasion filter - only show products that match any of the selected occasions
+                (!selectedFilters.occasion.length || selectedFilters.occasion.some(selected => product.occasion.toLowerCase().includes(selected.toLowerCase()))) &&
+                
+                // Fragrance Generation filter - only show products that match any of the selected age groups
+                (!selectedFilters.ageGroup.length || selectedFilters.ageGroup.some(selected => product.ageGroup.toLowerCase().includes(selected.toLowerCase()))) &&
+                
+                // Fragrance Personality filter - only show products that match any of the selected personality types
+                (!selectedFilters.personalityType.length || selectedFilters.personalityType.some(selected => product.personalityType.toLowerCase().includes(selected.toLowerCase())))
+            );
+        });
+
+        // Render the filtered products
+        renderProducts(filteredProducts);
+    }
+
+    // Function to clear all filters
+    function clearFilters() {
+        // Reset all dropdown filters to null (no selection)
+        $('#fragrance-dna, #fragrance-family, #fragrance-concentration, #fragrance-occasion, #fragrance-generation, #fragrance-personality').val(null).trigger('change');
+        
+        // Re-render all products (show all products)
+        renderProducts(products);
+    }
+
+    // Function to open modal
+    function openModal(productName) {
+        document.getElementById('modalProductName').innerText = productName;
+        updatePrice(); // Update price display based on selected volume
+        document.getElementById('productModal').style.display = 'block';
+    }
+
+    // Function to close modal
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+    }
+
+    // Add a product to the shopping bag from the modal
+    function addToBagFromModal() {
+        const productName = document.getElementById('modalProductName').innerText;
+        const selectedVolume = document.getElementById('volumeSelection').value;
+        const quantity = parseInt(document.getElementById('quantityInput').value);
+        const pricePerUnit = getPrice(selectedVolume);
+        const totalPrice = pricePerUnit * quantity;
+
+        // Check if the item already exists in the bag
+        let itemExists = false;
+        for (let item of shoppingBag) {
+            if (item.name === productName && item.volume === selectedVolume) {
+                // Update the quantity and total price if it exists
+                item.quantity += quantity;
+                item.price += totalPrice;
+                itemExists = true;
+                break;
+            }
+        }
+
+        // If item does not exist, add as a new entry
+        if (!itemExists) {
+            shoppingBag.push({ name: productName, volume: selectedVolume, quantity: quantity, price: totalPrice });
+        }
+        
+        updateBagCount();
+        closeModal();
+    }
+
+    // Update the displayed count of items in the shopping bag
+    function updateBagCount() {
+        let totalItems = shoppingBag.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('orderCount').innerText = totalItems;
+    }
+
+    // Function to handle viewing product details (placeholder function)
+    function viewDetails() {
+        alert('View Details functionality is not implemented yet.');
+    }
+
+    // Update the displayed price based on selected volume
+    function updatePrice() {
+        const volume = document.getElementById('volumeSelection').value;
+        const price = getPrice(volume);
+        const quantity = parseInt(document.getElementById('quantityInput').value);
+        document.getElementById('priceDisplay').innerText = `₱ ${(price * quantity).toFixed(2)}`;
+    }
+
+    // Function to get price based on volume
+    function getPrice(volume) {
+        let price = 54.00;
+        switch (volume) {
+            case '10 ml':
+                price = 54.00;
+                break;
+            case '30 ml':
+                price = 162.00;
+                break;
+            case '50 ml':
+                price = 270.00;
+                break;
+            case '100 ml':
+                price = 540.00;
+                break;
+        }
+        return price;
+    }
+
+    // Function to change quantity in modal
+    function changeQuantity(amount) {
+        const quantityInput = document.getElementById('quantityInput');
+        let currentQuantity = parseInt(quantityInput.value);
+        currentQuantity = Math.max(1, currentQuantity + amount); // Ensure quantity is at least 1
+        quantityInput.value = currentQuantity;
+        updatePrice(); // Update price when quantity changes
+    }
+
+    // Function to open shopping bag modal
+    function openBagModal() {
+        renderBagItems();
+        document.getElementById('shoppingBagModal').style.display = 'block';
+    }
+
+    // Function to close shopping bag modal
+    function closeBagModal() {
+        document.getElementById('shoppingBagModal').style.display = 'none';
+    }
+
+    // Render the shopping bag items in the modal
+    function renderBagItems() {
+        const bagItemsContainer = document.getElementById('bagItems');
+        bagItemsContainer.innerHTML = '';
+
+        if (shoppingBag.length === 0) {
+            bagItemsContainer.innerText = 'Your shopping bag is empty.';
+        } else {
+            shoppingBag.forEach((item, index) => {
+                const bagItem = document.createElement('div');
+                bagItem.classList.add('shopping-bag-item');
+                bagItem.innerHTML = `
+                    <p><strong>${item.name}</strong> (${item.volume}) - Quantity: ${item.quantity} - Price: ₱ ${item.price.toFixed(2)}</p>
+                    <button onclick="removeItemFromBag(${index})">Remove</button>
+                `;
+                bagItemsContainer.appendChild(bagItem);
+            });
+        }
+    }
+
+    // Remove an item from the shopping bag
+    function removeItemFromBag(index) {
+        shoppingBag.splice(index, 1);
+        updateBagCount();
+        renderBagItems();
+    }
+
+    // Function to handle checkout (placeholder)
+    function checkout() {
+        alert('Proceeding to checkout...');
+    }
+</script>
+
 </body>
 </html>
